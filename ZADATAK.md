@@ -52,5 +52,5 @@ Potrebno je:
 
 5. Potrebno je napisati uredan i gramatički točan README.md (na engleskom jeziku) kako bi vjerno reprezentirao svrhu alata. 
 
-Dana su potrebna prava osobi koja rješava zadatak da se kod može pushati.
+Dana su potrebna prava osobi koja rješava zadatak da se kod može pushati na GitHub.
 
