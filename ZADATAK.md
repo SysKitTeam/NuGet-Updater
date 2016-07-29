@@ -13,7 +13,7 @@ Naš alat koristi taj modificirani NuGet.exe koji hostamo mi (downloada se prili
 # Opis alata
 Alat izgleda ovako:
 
-![alt text](https://www.dropbox.com/s/4j0qgjn204f69yd/updater.png?raw=1)
+![alt tag](https://www.dropbox.com/s/4j0qgjn204f69yd/updater.png?raw=1)
 
 Elementi sučelja (u redosljedu konfiguriranja):
 
