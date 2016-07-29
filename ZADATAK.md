@@ -13,25 +13,25 @@ Naš alat koristi taj modificirani NuGet.exe koji hostamo mi (downloada se prili
 # Opis alata
 Alat izgleda ovako:
 
-![alt tag](https://www.dropbox.com/s/4j0qgjn204f69yd/updater.png?raw=1)
+![alt text](https://www.dropbox.com/s/4j0qgjn204f69yd/updater.png?raw=1)
 
 Elementi sučelja (u redosljedu konfiguriranja):
 
-1.	NuGet repository - repozitorij sa NuGet paketima. Acceleratio koristi repozitorij na adresi http://nuget.acceleratio.hr/nuget/
-2.	Browse for solution directory - odabir root solution foldera, iz čijih će se podfoldera (rekurzivno) učitati sln datoteke u Solutions listu u sučelju.
-3.	Root directory - odabrani root directory.
-4.	Package(s) - nakon odabira root foldera ili klikom na "Load" pokraj NuGet Repository kontrole, učitat će se checkbox lista paketa iz repozitorija u ovu kontrolu. Potrebno je odabrati koje pakete želimo updateati.
-5.	Package version - verzija paketa koji se updatea. U slučaju da se odabere više paketa, uzima se zajednička verzija odabranih paketa (presjek).
-6.	Latest - označiti ako želimo pakete updateati na zadnju verziju, inače odznačiti i odabrati željenu verziju.
-7.	Advanced Options: Upload files to packages folder on source control - označiti ako želimo sve datoteke paketa iz packages foldera uplodati na TFS (potrebno jer NuGet restore ne radi dobro u nekim situacijama).
-8.	Advanced Options: Delete older files from packages folder on source control (this could take a while) - pobriše stare foldere paketa iz packages foldera na TFS-u (nije potrebno, ali poželjno jer se zna tih foldera nakupiti na TFS-u).
+1. NuGet repository - repozitorij sa NuGet paketima. Acceleratio koristi repozitorij na adresi http://nuget.acceleratio.hr/nuget/
+2. Browse for solution directory - odabir root solution foldera, iz čijih će se podfoldera (rekurzivno) učitati sln datoteke u Solutions listu u sučelju.
+3. Root directory - odabrani root directory.
+4. Package(s) - nakon odabira root foldera ili klikom na "Load" pokraj NuGet Repository kontrole, učitat će se checkbox lista paketa iz repozitorija u ovu kontrolu. Potrebno je odabrati koje pakete želimo updateati.
+5. Package version - verzija paketa koji se updatea. U slučaju da se odabere više paketa, uzima se zajednička verzija odabranih paketa (presjek).
+6. Latest - označiti ako želimo pakete updateati na zadnju verziju, inače odznačiti i odabrati željenu verziju.
+7. Advanced Options: Upload files to packages folder on source control - označiti ako želimo sve datoteke paketa iz packages foldera uplodati na TFS (potrebno jer NuGet restore ne radi dobro u nekim situacijama).
+8. Advanced Options: Delete older files from packages folder on source control (this could take a while) - pobriše stare foldere paketa iz packages foldera na TFS-u (nije potrebno, ali poželjno jer se zna tih foldera nakupiti na TFS-u).
 
 Primjer jednostavnog use-case za update Acceleratio.Common na zadnju verziju:
 
-1.	Odabrati Browse for solution directory i odabrati root folder, npr. C:\Projects
-2.	Označiti solutione u listi u kojima želimo updateati Acceleratio.Common, u našem slučaju to su Common.UserControls.sln i TSL.sln
-3.	Kliknuti na Update selected solutions. Pričekati da alat završi update.
-4.	Ako je sve prošlo OK, commitati promjene kroz Team Explorer u Visual Studiu.
+1. Odabrati Browse for solution directory i odabrati root folder, npr. C:\Projects
+2. Označiti solutione u listi u kojima želimo updateati Acceleratio.Common, u našem slučaju to su Common.UserControls.sln i TSL.sln
+3. Kliknuti na Update selected solutions. Pričekati da alat završi update.
+4. Ako je sve prošlo OK, commitati promjene kroz Team Explorer u Visual Studiu.
 
 # Zadatak
 
