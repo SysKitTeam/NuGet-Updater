@@ -50,7 +50,7 @@ Potrebno je:
 
 4. Kad su prethodne točke napravljene, potrebno je postaviti projekt u naš GitHub repozitorij koji se nalazi na adresi: https://github.com/Acceleratio/NuGet-Updater
 
-Dana su potrebna prava osobi koja rješava zadatak da se kod može pushati.
+5. Potrebno je napisati uredan i gramatički točan README.md (na engleskom jeziku) kako bi vjerno reprezentirao svrhu alata. 
 
-Potrebno je napisati uredan i gramatički točan README.md (na engleskom jeziku) kako bi vjerno reprezentirao svrhu alata.
+Dana su potrebna prava osobi koja rješava zadatak da se kod može pushati.
 
