@@ -25,6 +25,7 @@ NuGet.exe is the aforementioned modified binary.
 This binary can be found in this repository. 
 
 Furthermore, there are two advanced options:
+
 1. uploading files to packages folder on source control (NuGet restore can sometimes function improperly)
 2. deleting older files from packages folder on source control
 
