@@ -33,7 +33,7 @@ Here's what it looks like:
 
 ![alt tag](https://www.dropbox.com/s/4j0qgjn204f69yd/updater.png?raw=1)
 
-Interface elements:
+#####Interface elements:
 
 1. NuGet repository - repository containing NuGet packages.
 2. Browse for solution directory - root folder selection, all the .sln 
