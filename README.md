@@ -1,5 +1,7 @@
 # NuGet-Updater
-NuGet update tool designed to update NuGet packages outside of Visual Studio.
+NuGet update is tool developed by [Acceleratio Ltd.](https://acceleratio.net/) and is designed to update NuGet packages outside of Visual Studio. 
+
+This project is licensed under the terms of the MIT license.
 
 # Motivation
 There is a common project in our company called "Acceleratio.Common" made for
