@@ -3,6 +3,10 @@ NuGet update is tool developed by [Acceleratio Ltd.](https://acceleratio.net/) a
 
 This project is licensed under the terms of the MIT license.
 
+# Download
+
+Download latest binary here: [Acceleratio.Nuget.Updater.zip](https://github.com/Acceleratio/NuGet-Updater/raw/master/dist/Acceleratio.Nuget.Updater.zip)
+
 # Motivation
 There is a common project in our company called "Acceleratio.Common" made for
 code-sharing purposes. Using NuGet package manager this project has been 
