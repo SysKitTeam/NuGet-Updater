@@ -52,9 +52,9 @@ namespace Acceleratio.Nuget.Updater
             this.uploadCheckBox = new System.Windows.Forms.CheckBox();
             this.deleteOldCheckBox = new System.Windows.Forms.CheckBox();
             this.versionLabel = new System.Windows.Forms.Label();
-            this.packagesComboBoxList = new CheckComboBoxTest.CheckedComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.sourceControlComboBox = new System.Windows.Forms.ComboBox();
+            this.packagesComboBoxList = new CheckComboBoxTest.CheckedComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -69,10 +69,10 @@ namespace Acceleratio.Nuget.Updater
             // rootPathTextBox
             // 
             this.rootPathTextBox.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.rootPathTextBox.Location = new System.Drawing.Point(114, 41);
+            this.rootPathTextBox.Location = new System.Drawing.Point(108, 41);
             this.rootPathTextBox.Name = "rootPathTextBox";
             this.rootPathTextBox.ReadOnly = true;
-            this.rootPathTextBox.Size = new System.Drawing.Size(530, 23);
+            this.rootPathTextBox.Size = new System.Drawing.Size(536, 23);
             this.rootPathTextBox.TabIndex = 1;
             // 
             // browseButton
@@ -109,9 +109,9 @@ namespace Acceleratio.Nuget.Updater
             // repositoryTextBox
             // 
             this.repositoryTextBox.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.repositoryTextBox.Location = new System.Drawing.Point(114, 13);
+            this.repositoryTextBox.Location = new System.Drawing.Point(108, 13);
             this.repositoryTextBox.Name = "repositoryTextBox";
-            this.repositoryTextBox.Size = new System.Drawing.Size(441, 23);
+            this.repositoryTextBox.Size = new System.Drawing.Size(447, 23);
             this.repositoryTextBox.TabIndex = 6;
             this.repositoryTextBox.TextChanged += new System.EventHandler(this.repositoryTextBox_TextChanged);
             // 
@@ -192,9 +192,9 @@ namespace Acceleratio.Nuget.Updater
             this.versionsDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.versionsDropDown.Enabled = false;
             this.versionsDropDown.FormattingEnabled = true;
-            this.versionsDropDown.Location = new System.Drawing.Point(114, 100);
+            this.versionsDropDown.Location = new System.Drawing.Point(108, 100);
             this.versionsDropDown.Name = "versionsDropDown";
-            this.versionsDropDown.Size = new System.Drawing.Size(530, 21);
+            this.versionsDropDown.Size = new System.Drawing.Size(536, 21);
             this.versionsDropDown.TabIndex = 19;
             // 
             // connectButton
@@ -212,34 +212,37 @@ namespace Acceleratio.Nuget.Updater
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(12, 163);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(96, 13);
+            this.label7.Size = new System.Drawing.Size(88, 13);
             this.label7.TabIndex = 22;
-            this.label7.Text = "Advanced options:";
+            this.label7.Text = "Advanced (TFS):";
+            this.label7.Visible = false;
             // 
             // uploadCheckBox
             // 
             this.uploadCheckBox.AutoSize = true;
             this.uploadCheckBox.Checked = true;
             this.uploadCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.uploadCheckBox.Location = new System.Drawing.Point(114, 163);
+            this.uploadCheckBox.Location = new System.Drawing.Point(108, 162);
             this.uploadCheckBox.Name = "uploadCheckBox";
             this.uploadCheckBox.Size = new System.Drawing.Size(257, 17);
             this.uploadCheckBox.TabIndex = 23;
             this.uploadCheckBox.Text = "Upload files to packages folder on source control";
             this.uploadCheckBox.UseVisualStyleBackColor = true;
+            this.uploadCheckBox.Visible = false;
             // 
             // deleteOldCheckBox
             // 
             this.deleteOldCheckBox.AutoSize = true;
             this.deleteOldCheckBox.Checked = true;
             this.deleteOldCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.deleteOldCheckBox.Location = new System.Drawing.Point(114, 186);
+            this.deleteOldCheckBox.Location = new System.Drawing.Point(108, 185);
             this.deleteOldCheckBox.Name = "deleteOldCheckBox";
             this.deleteOldCheckBox.Size = new System.Drawing.Size(405, 17);
             this.deleteOldCheckBox.TabIndex = 24;
             this.deleteOldCheckBox.Text = "Delete older files from packages folder on source control (this could take a whil" +
     "e)";
             this.deleteOldCheckBox.UseVisualStyleBackColor = true;
+            this.deleteOldCheckBox.Visible = false;
             // 
             // versionLabel
             // 
@@ -249,22 +252,6 @@ namespace Acceleratio.Nuget.Updater
             this.versionLabel.Size = new System.Drawing.Size(22, 13);
             this.versionLabel.TabIndex = 25;
             this.versionLabel.Text = "1.2";
-            // 
-            // packagesComboBoxList
-            // 
-            this.packagesComboBoxList.CheckOnClick = true;
-            this.packagesComboBoxList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.packagesComboBoxList.DropDownHeight = 1;
-            this.packagesComboBoxList.Enabled = false;
-            this.packagesComboBoxList.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.packagesComboBoxList.FormattingEnabled = true;
-            this.packagesComboBoxList.IntegralHeight = false;
-            this.packagesComboBoxList.Location = new System.Drawing.Point(114, 70);
-            this.packagesComboBoxList.Name = "packagesComboBoxList";
-            this.packagesComboBoxList.Size = new System.Drawing.Size(530, 24);
-            this.packagesComboBoxList.TabIndex = 20;
-            this.packagesComboBoxList.ValueSeparator = "; ";
-            this.packagesComboBoxList.DropDownClosed += new System.EventHandler(this.packagesComboBoxList_DropDownClosed);
             // 
             // label8
             // 
@@ -282,10 +269,27 @@ namespace Acceleratio.Nuget.Updater
             this.sourceControlComboBox.Items.AddRange(new object[] {
             "Git",
             "Team Foundation Server"});
-            this.sourceControlComboBox.Location = new System.Drawing.Point(114, 127);
+            this.sourceControlComboBox.Location = new System.Drawing.Point(108, 127);
             this.sourceControlComboBox.Name = "sourceControlComboBox";
-            this.sourceControlComboBox.Size = new System.Drawing.Size(530, 21);
+            this.sourceControlComboBox.Size = new System.Drawing.Size(536, 21);
             this.sourceControlComboBox.TabIndex = 27;
+            this.sourceControlComboBox.SelectedIndexChanged += new System.EventHandler(this.sourceControlComboBox_SelectedIndexChanged);
+            // 
+            // packagesComboBoxList
+            // 
+            this.packagesComboBoxList.CheckOnClick = true;
+            this.packagesComboBoxList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.packagesComboBoxList.DropDownHeight = 1;
+            this.packagesComboBoxList.Enabled = false;
+            this.packagesComboBoxList.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.packagesComboBoxList.FormattingEnabled = true;
+            this.packagesComboBoxList.IntegralHeight = false;
+            this.packagesComboBoxList.Location = new System.Drawing.Point(108, 70);
+            this.packagesComboBoxList.Name = "packagesComboBoxList";
+            this.packagesComboBoxList.Size = new System.Drawing.Size(536, 24);
+            this.packagesComboBoxList.TabIndex = 20;
+            this.packagesComboBoxList.ValueSeparator = "; ";
+            this.packagesComboBoxList.DropDownClosed += new System.EventHandler(this.packagesComboBoxList_DropDownClosed);
             // 
             // Main
             // 

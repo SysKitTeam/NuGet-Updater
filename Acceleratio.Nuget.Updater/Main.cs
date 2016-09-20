@@ -52,7 +52,7 @@ namespace Acceleratio.Nuget.Updater
             _packages = new List<NuGetPackage>();
             InitializeComponent();
             versionLabel.Text = Constants.AppVersion;
-            sourceControlComboBox.SelectedIndex = 0;
+            sourceControlComboBox.SelectedIndex = 1;
             SetControlsEnabled(false);
         }
 
@@ -370,9 +370,9 @@ namespace Acceleratio.Nuget.Updater
 
                 WriteStatus("Update finished.");
 
-                if (deleteOldCheckBox.Checked || uploadCheckBox.Checked)
+                if (sourceControlComboBox.SelectedIndex == 1 && (deleteOldCheckBox.Checked || uploadCheckBox.Checked))
                 {
-                    WriteStatus("Starting source control operations..." + Environment.NewLine + Environment.NewLine);
+                    WriteStatus("Starting TFS source control operations..." + Environment.NewLine + Environment.NewLine);
 
                     var tfsBinary = TFSManager.GetTFSBinaryPath();
                     if (tfsBinary != null)
@@ -427,7 +427,7 @@ namespace Acceleratio.Nuget.Updater
             }
             else
             {
-                WriteStatus("All done, with no apparent catastrophic errors. Inspect the changes in Visual Studio TFS window and, if all looks good, check-in them to the source control." + Environment.NewLine);
+                WriteStatus("All done, with no apparent catastrophic errors. Inspect the changes in Visual Studio TFS window, and if all looks good, check them in to the source control." + Environment.NewLine);
             }
 
             var filename = await LogWriter.WriteAllToLog(statusTextBox.Text, solutionsList.SelectedItems.Cast<string>().ToList(), PackagesToInstall);
@@ -489,8 +489,9 @@ namespace Acceleratio.Nuget.Updater
             versionsDropDown.Enabled = enabled && versionsDropDown.SelectedItem != null && !latestCheckBox.Checked;
             latestCheckBox.Enabled = enabled && _packages.Any();
             solutionsList.Enabled = enabled;
-            uploadCheckBox.Enabled = enabled;
-            deleteOldCheckBox.Enabled = enabled;
+            uploadCheckBox.Enabled = enabled && sourceControlComboBox.SelectedIndex == 1;
+            deleteOldCheckBox.Enabled = enabled && sourceControlComboBox.SelectedIndex == 1;
+            sourceControlComboBox.Enabled = enabled;
 
             SetUpdateButtonEnabled(enabled);
         }
@@ -517,6 +518,13 @@ namespace Acceleratio.Nuget.Updater
             bool isValidUrl = Uri.TryCreate(repositoryTextBox.Text, UriKind.Absolute, out uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
             SetControlsEnabled(isValidUrl, false);
             repositoryTextBox.BackColor = isValidUrl ? Color.White : Color.MistyRose;
+        }
+
+        private void sourceControlComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            uploadCheckBox.Visible = sourceControlComboBox.SelectedIndex == 1;
+            deleteOldCheckBox.Visible = sourceControlComboBox.SelectedIndex == 1;
+            label7.Visible = sourceControlComboBox.SelectedIndex == 1;
         }
     }
 }
