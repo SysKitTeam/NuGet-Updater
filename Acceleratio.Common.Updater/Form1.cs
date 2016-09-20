@@ -19,10 +19,8 @@ namespace Acceleratio.Common.Updater
 {
     public partial class Form1 : Form
     {
-
         private string NuGetRepositoryURL => getRepositoryURL();
         private readonly List<NuGetPackage> _packages;
-
 
         private List<NuGetPackage> PackagesToInstall
         {
@@ -79,7 +77,7 @@ namespace Acceleratio.Common.Updater
             }
             catch (Exception)
             {
-                ShowError(AppStrings.CannotLoadLastRepoURL);
+                ShowError(AppStrings.CannotLoadLastRepoUrl);
             }
         }
 
@@ -97,7 +95,7 @@ namespace Acceleratio.Common.Updater
             }
             catch (Exception)
             {
-                ShowError(AppStrings.CannotLoadLastRepoURL);
+                ShowError(AppStrings.CannotLoadLastRepoUrl);
             }
         }
 
@@ -267,11 +265,7 @@ namespace Acceleratio.Common.Updater
 
             if (packagesComboBoxList.Items.Count == 0)
             {
-                var distinctPackages = _packages
-                                        .Select(x => x.PackageName)
-                                        .Distinct()
-                                        .OrderBy(x => x)
-                                        .ToList();
+                var distinctPackages = _packages.Select(x => x.PackageName).Distinct().OrderBy(x => x).ToList();
 
                 foreach (var package in distinctPackages)
                 {
@@ -310,11 +304,7 @@ namespace Acceleratio.Common.Updater
                 }
                 else
                 {
-                    var packageStrings = result
-                                            .Split('\n')
-                                            .Select(x => x.Trim())
-                                            .Where(x => !String.IsNullOrWhiteSpace(x))
-                                            .ToList();
+                    var packageStrings = result.Split('\n').Select(x => x.Trim()).Where(x => !String.IsNullOrWhiteSpace(x)).ToList();
 
                     if (packageStrings.Any())
                     {
@@ -383,7 +373,6 @@ namespace Acceleratio.Common.Updater
             return output;
         }
 
-
         private async Task EnsureNuGetBinary()
         {
             if (!File.Exists(AppStrings.NuGetBinary))
@@ -410,7 +399,6 @@ namespace Acceleratio.Common.Updater
 
             WriteStatus("Using nuget.exe version " + FileVersionInfo.GetVersionInfo(Path.GetFullPath(AppStrings.NuGetBinary)).ProductVersion);
         }
-
 
         private string GetPackageDirectoryPath(string solution, NuGetPackage package)
         {
@@ -489,7 +477,7 @@ namespace Acceleratio.Common.Updater
                     else
                     {
                         isError = true;
-                        WriteStatus(AppStrings.CannotLoadTFSBinary);
+                        WriteStatus(AppStrings.CannotLoadTfsBinary);
                     }
                 }
             }
@@ -583,10 +571,7 @@ namespace Acceleratio.Common.Updater
 
         private void SetUpdateButtonEnabled(bool enabled)
         {
-            updateButton.Enabled = enabled
-                                   && solutionsList.SelectedItems.Count > 0
-                                   && versionsDropDown.SelectedItem != null
-                                   && PackagesToInstall.Any();
+            updateButton.Enabled = enabled && solutionsList.SelectedItems.Count > 0 && versionsDropDown.SelectedItem != null && PackagesToInstall.Any();
         }
 
 
@@ -598,7 +583,7 @@ namespace Acceleratio.Common.Updater
 
         private static void ShowWarning(string text)
         {
-            MessageBox.Show(text, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show(text, @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
 
