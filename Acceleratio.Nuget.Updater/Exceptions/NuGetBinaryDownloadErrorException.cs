@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acceleratio.Common.Updater.Exceptions
+namespace Acceleratio.Nuget.Updater.Exceptions
 {
-    public class RepositoryContainsNoPackagesException: Exception
+    public class NuGetBinaryDownloadErrorException: Exception
     {
     }
 }

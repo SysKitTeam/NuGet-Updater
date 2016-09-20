@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acceleratio.Common.Updater.Model
+namespace Acceleratio.Nuget.Updater.Model
 {
     public class NuGetPackage
     {

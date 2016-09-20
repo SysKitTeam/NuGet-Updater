@@ -2,9 +2,9 @@
 using Microsoft.Win32;
 
 
-namespace Acceleratio.Common.Updater
+namespace Acceleratio.Nuget.Updater
 {
-    partial class Form1
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,7 @@ namespace Acceleratio.Common.Updater
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.label1 = new System.Windows.Forms.Label();
             this.rootPathTextBox = new System.Windows.Forms.TextBox();
             this.browseButton = new System.Windows.Forms.Button();
@@ -294,7 +294,7 @@ namespace Acceleratio.Common.Updater
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Acceleratio.Common.Updater";
+            this.Text = "Acceleratio.Nuget.Updater";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Acceleratio.Common.Updater.Properties
+namespace Acceleratio.Nuget.Updater.Properties
 {
 
 

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Acceleratio.Common.Updater.Properties
+namespace Acceleratio.Nuget.Updater.Properties
 {
 
 
@@ -44,7 +44,7 @@ namespace Acceleratio.Common.Updater.Properties
             {
                 if ((resourceMan == null))
                 {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Acceleratio.Common.Updater.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Acceleratio.Nuget.Updater.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

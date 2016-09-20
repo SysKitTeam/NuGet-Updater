@@ -10,17 +10,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using Acceleratio.Common.Updater.Exceptions;
-using Acceleratio.Common.Updater.Model;
+using Acceleratio.Nuget.Updater.Exceptions;
+using Acceleratio.Nuget.Updater.Model;
 using Microsoft.Build.Construction;
-using Microsoft.Win32;
 
-namespace Acceleratio.Common.Updater
+namespace Acceleratio.Nuget.Updater
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
-        private string NuGetRepositoryURL => getRepositoryURL();
         private readonly List<NuGetPackage> _packages;
+        private string NuGetRepositoryURL => repositoryTextBox.Text;
 
         private List<NuGetPackage> PackagesToInstall
         {
@@ -46,69 +45,15 @@ namespace Acceleratio.Common.Updater
             }
         }
 
-
-        public Form1()
+        public Main()
         {
             _packages = new List<NuGetPackage>();
             InitializeComponent();
-            InitRepositoryTextBox();
+            repositoryTextBox.Text = RegistryManager.GetRepositoryUrlFromRegistry();
         }
-
-
-        private string getRepositoryURL()
-        {
-            return String.IsNullOrEmpty(repositoryTextBox.Text) ? null : repositoryTextBox.Text;
-        }
-
-
-        private void InitRepositoryTextBox()
-        {
-            try
-            {
-                using (RegistryKey NuGetURLRegKey = Registry.CurrentUser.CreateSubKey(AppStrings.KEY_NAME))
-                    if (NuGetURLRegKey != null)
-                    {
-                        string lastEnteredRepository = NuGetURLRegKey.GetValue(AppStrings.KEY_NAME, "").ToString();
-                        if (!lastEnteredRepository.Equals(""))
-                        {
-                            repositoryTextBox.Text = lastEnteredRepository;
-                        }
-                    }
-            }
-            catch (Exception)
-            {
-                ShowError(AppStrings.CannotLoadLastRepoUrl);
-            }
-        }
-
-
-        private void UpdateRegistry()
-        {
-            try
-            {
-                using (RegistryKey NuGetURLRegKey = Registry.CurrentUser.CreateSubKey(AppStrings.KEY_NAME))
-
-                    if (NuGetURLRegKey != null)
-                    {
-                        NuGetURLRegKey.SetValue(AppStrings.KEY_NAME, repositoryTextBox.Text);
-                    }
-            }
-            catch (Exception)
-            {
-                ShowError(AppStrings.CannotLoadLastRepoUrl);
-            }
-        }
-
 
         private async void browseButton_Click(object sender, EventArgs e)
         {
-            if (!CheckNuGetURLNotNull())
-            {
-                return;
-            }
-
-            UpdateRegistry();
-
             FolderBrowserDialog fbd = new FolderBrowserDialog();
 
             if (fbd.ShowDialog() == DialogResult.OK)
@@ -138,13 +83,11 @@ namespace Acceleratio.Common.Updater
             }
         }
 
-
         private async void latestCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             await LoadVersionsDropdown();
             SetUpdateButtonEnabled(true);
         }
-
 
         private async void packagesComboBoxList_DropDownClosed(object sender, EventArgs e)
         {
@@ -152,37 +95,15 @@ namespace Acceleratio.Common.Updater
             SetUpdateButtonEnabled(true);
         }
 
-
         private void solutionsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetUpdateButtonEnabled(true);
         }
 
-
         private async void connectButton_Click(object sender, EventArgs e)
         {
-            if (!CheckNuGetURLNotNull())
-            {
-                return;
-            }
-
-            UpdateRegistry();
-
             await LoadControls();
         }
-
-
-        private bool CheckNuGetURLNotNull()
-        {
-            if (NuGetRepositoryURL == null)
-            {
-                ShowWarning("NuGet repository URL must be provided");
-                return false;
-            }
-
-            return true;
-        }
-
 
         private async Task LoadControls()
         {
@@ -214,13 +135,12 @@ namespace Acceleratio.Common.Updater
             catch (NuGetBinaryDownloadErrorException)
             {
                 WriteStatus("download error.", true);
-                ShowError($"Error downloading {AppStrings.NuGetBinary}, cannot continue.");
+                ShowError($"Error downloading {Constants.NuGetBinary}, cannot continue.");
                 repositoryTextBox.Enabled = connectButton.Enabled = true;
             }
 
             SetControlsEnabled(true);
         }
-
 
         private List<string> GetCommonVersionsForSelectedPackages()
         {
@@ -234,7 +154,6 @@ namespace Acceleratio.Common.Updater
             versions = versions.Distinct().OrderBy(x => new Version(Regex.Replace(x, "[^0-9.]", ""))).ToList();
             return versions;
         }
-
 
         private async Task LoadVersionsDropdown()
         {
@@ -250,14 +169,13 @@ namespace Acceleratio.Common.Updater
 
             if (!versions.Any())
             {
-                WriteStatus(AppStrings.CommonVersionsNotFound);
+                WriteStatus("Warning: unable to find common versions for the selected packages.");
             }
 
             // select default
             versionsDropDown.SelectedItem = versions.Any() ? versions.Last() : null;
             versionsDropDown.Enabled = versions.Any() && !latestCheckBox.Checked;
         }
-
 
         private async Task EnsureLoadPackagesDropdown()
         {
@@ -283,7 +201,6 @@ namespace Acceleratio.Common.Updater
             }
         }
 
-
         private async Task EnsurePackagesLoaded()
         {
             if (!_packages.Any())
@@ -296,7 +213,7 @@ namespace Acceleratio.Common.Updater
                 packagesComboBoxList.BackColor = Color.White;
                 _packages.Clear();
 
-                string result = await Task.Run(() => ExecuteBinary(AppStrings.NuGetBinary, $"list -source \"{NuGetRepositoryURL}\" -allversions -prerelease"));
+                string result = await Task.Run(() => ExecuteBinary(Constants.NuGetBinary, $"list -source \"{NuGetRepositoryURL}\" -allversions -prerelease"));
 
                 if (String.IsNullOrEmpty(result))
                 {
@@ -322,7 +239,6 @@ namespace Acceleratio.Common.Updater
                 }
             }
         }
-
 
         private string ExecuteBinary(string binary, string arguments, bool outputToStatusWindow = false)
         {
@@ -375,7 +291,7 @@ namespace Acceleratio.Common.Updater
 
         private async Task EnsureNuGetBinary()
         {
-            if (!File.Exists(AppStrings.NuGetBinary))
+            if (!File.Exists(Constants.NuGetBinary))
             {
                 WriteStatus("Downloading latest nuget.exe...");
 
@@ -385,7 +301,7 @@ namespace Acceleratio.Common.Updater
                     {
                         using (var client = new WebClient())
                         {
-                            client.DownloadFile(AppStrings.NuGetWebBinary, AppStrings.NuGetBinary);
+                            client.DownloadFile(Constants.NuGetWebBinary, Constants.NuGetBinary);
                         }
                     }
                     catch
@@ -397,7 +313,7 @@ namespace Acceleratio.Common.Updater
                 WriteStatus("done.", true);
             }
 
-            WriteStatus("Using nuget.exe version " + FileVersionInfo.GetVersionInfo(Path.GetFullPath(AppStrings.NuGetBinary)).ProductVersion);
+            WriteStatus("Using nuget.exe version " + FileVersionInfo.GetVersionInfo(Path.GetFullPath(Constants.NuGetBinary)).ProductVersion);
         }
 
         private string GetPackageDirectoryPath(string solution, NuGetPackage package)
@@ -405,12 +321,10 @@ namespace Acceleratio.Common.Updater
             return Path.GetDirectoryName(solution).TrimEnd('\\') + "\\packages\\" + package.PackageName + "." + package.PackageVersion;
         }
 
-
         private List<string> GetOldPackageDirectoriesPaths(string solution, NuGetPackage package)
         {
             return Directory.GetDirectories(Path.GetDirectoryName(solution).TrimEnd('\\') + "\\packages\\", package.PackageName + ".*").ToList();
         }
-
 
         public async Task DoUpdate()
         {
@@ -424,9 +338,7 @@ namespace Acceleratio.Common.Updater
                 foreach (string solution in solutionsList.SelectedItems)
                 {
                     FixProjectFiles(solution);
-                    await Task.Run(() => ExecuteBinary(AppStrings.NuGetBinary,
-                                                       $"update \"{solution}\" -id \"{package.PackageName}\" -version \"{package.PackageVersion}\" -source \"{NuGetRepositoryURL}\" -noninteractive -prerelease -verbose -verbosity detailed -fileconflictaction overwrite",
-                                                       true));
+                    await Task.Run(() => ExecuteBinary(Constants.NuGetBinary, $"update \"{solution}\" -id \"{package.PackageName}\" -version \"{package.PackageVersion}\" -source \"{NuGetRepositoryURL}\" -noninteractive -prerelease -verbose -verbosity detailed -fileconflictaction overwrite", true));
                 }
 
                 WriteStatus("Update finished.");
@@ -435,7 +347,7 @@ namespace Acceleratio.Common.Updater
                 {
                     WriteStatus("Starting source control operations..." + Environment.NewLine + Environment.NewLine);
 
-                    var tfsBinary = TFSBinaryPath.GetTFSBinaryPath();
+                    var tfsBinary = TFSManager.GetTFSBinaryPath();
                     if (tfsBinary != null)
                     {
                         foreach (string solution in solutionsList.SelectedItems)
@@ -477,24 +389,23 @@ namespace Acceleratio.Common.Updater
                     else
                     {
                         isError = true;
-                        WriteStatus(AppStrings.CannotLoadTfsBinary);
+                        WriteStatus("Error: Unable to load TFS binary. Is Visual Studio installed?");
                     }
                 }
             }
 
             if (isError)
             {
-                WriteStatus(AppStrings.UpdateProcessErrors + Environment.NewLine);
+                WriteStatus("There were errors in the update process, please inspect the output." + Environment.NewLine);
             }
             else
             {
-                WriteStatus(AppStrings.SuccessfulUpdate + Environment.NewLine);
+                WriteStatus("All done, with no apparent catastrophic errors. Inspect the changes in Visual Studio TFS window and, if all looks good, check-in them to the source control." + Environment.NewLine);
             }
 
-            var filename = await LogWriter.WriteToLog(statusTextBox.Text, solutionsList.SelectedItems.Cast<string>().ToList(), PackagesToInstall);
+            var filename = await LogWriter.WriteAllToLog(statusTextBox.Text, solutionsList.SelectedItems.Cast<string>().ToList(), PackagesToInstall);
             WriteStatus($"All output has been written to log: {filename}");
         }
-
 
         public void FixProjectFiles(string solutionFilePath) // https://github.com/NuGet/Home/issues/2234
         {
@@ -527,30 +438,19 @@ namespace Acceleratio.Common.Updater
             WriteStatus("");
         }
 
-
         private async void updateButton_Click(object sender, EventArgs e)
         {
             SetControlsEnabled(false);
-
-            if (NuGetRepositoryURL == null)
-            {
-                ShowWarning("NuGet repository URL must be provided");
-                return;
-            }
-
-            UpdateRegistry();
 
             await DoUpdate();
 
             SetControlsEnabled(true);
         }
 
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            File.Delete(AppStrings.NuGetBinary);
+            File.Delete(Constants.NuGetBinary);
         }
-
 
         private void SetControlsEnabled(bool enabled)
         {
@@ -568,24 +468,20 @@ namespace Acceleratio.Common.Updater
             SetUpdateButtonEnabled(enabled);
         }
 
-
         private void SetUpdateButtonEnabled(bool enabled)
         {
             updateButton.Enabled = enabled && solutionsList.SelectedItems.Count > 0 && versionsDropDown.SelectedItem != null && PackagesToInstall.Any();
         }
-
 
         private void ShowError(string text)
         {
             MessageBox.Show(text, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-
         private static void ShowWarning(string text)
         {
             MessageBox.Show(text, @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
-
 
         private void WriteStatus(string status, bool append = false)
         {

@@ -1,18 +1,15 @@
-﻿using Acceleratio.Common.Updater.Model;
+﻿using Acceleratio.Nuget.Updater.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Acceleratio.Common.Updater
+namespace Acceleratio.Nuget.Updater
 {
     public sealed class LogWriter
     {
-
-        private LogWriter() { }
-
-        public static async Task<string> WriteToLog(string statusText, List<string> solutionsList, List<NuGetPackage> PackagesToInstall)
+        public static async Task<string> WriteAllToLog(string statusText, List<string> solutionsList, List<NuGetPackage> PackagesToInstall)
         {
             var now = DateTime.Now;
             var filename = now.ToString("s").Replace(":", "-") + ".txt";
@@ -22,7 +19,7 @@ namespace Acceleratio.Common.Updater
             await Task.Run(() =>
             {
                 string text = "";
-                text += $"Acceleratio.Common.Updater Update Log, {now.ToString("g")}" + Environment.NewLine;
+                text += $"Acceleratio.Nuget.Updater Update Log, {now.ToString("g")}" + Environment.NewLine;
 
                 text += Environment.NewLine;
                 text += "------------------------------------------------------------------------------------------------";

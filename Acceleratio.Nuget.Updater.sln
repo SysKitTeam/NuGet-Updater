@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acceleratio.Common.Updater", "Acceleratio.Common.Updater\Acceleratio.Common.Updater.csproj", "{FC6FEB08-A8C2-4DFE-8DA3-976562E02FE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acceleratio.Nuget.Updater", "Acceleratio.Nuget.Updater\Acceleratio.Nuget.Updater.csproj", "{FC6FEB08-A8C2-4DFE-8DA3-976562E02FE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

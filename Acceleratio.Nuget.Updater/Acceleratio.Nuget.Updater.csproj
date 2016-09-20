@@ -7,8 +7,8 @@
     <ProjectGuid>{FC6FEB08-A8C2-4DFE-8DA3-976562E02FE5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Acceleratio.Common.Updater</RootNamespace>
-    <AssemblyName>Acceleratio.Common.Updater</AssemblyName>
+    <RootNamespace>Acceleratio.Nuget.Updater</RootNamespace>
+    <AssemblyName>Acceleratio.Nuget.Updater</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -51,27 +51,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppStrings.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Controls\CheckedComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Exceptions\NuGetBinaryDownloadErrorException.cs" />
     <Compile Include="Exceptions\RepositoryContainsNoPackagesException.cs" />
     <Compile Include="Exceptions\RepositoryNotFoundException.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="LogWriter.cs" />
     <Compile Include="Model\NuGetPackage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistryManager.cs" />
-    <Compile Include="TFSBinaryPath.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="TFSManager.cs" />
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -97,7 +97,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="nuget\nuget.exe" />
+    <Content Include="NugetBinary\nuget.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

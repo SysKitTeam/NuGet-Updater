@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Acceleratio.Common.Updater
+namespace Acceleratio.Nuget.Updater
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace Acceleratio.Common.Updater
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Main());
         }
     }
 }
