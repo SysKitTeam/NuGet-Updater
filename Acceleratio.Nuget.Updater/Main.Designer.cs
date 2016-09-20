@@ -51,8 +51,10 @@ namespace Acceleratio.Nuget.Updater
             this.label7 = new System.Windows.Forms.Label();
             this.uploadCheckBox = new System.Windows.Forms.CheckBox();
             this.deleteOldCheckBox = new System.Windows.Forms.CheckBox();
-            this.packagesComboBoxList = new CheckComboBoxTest.CheckedComboBox();
             this.versionLabel = new System.Windows.Forms.Label();
+            this.packagesComboBoxList = new CheckComboBoxTest.CheckedComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.sourceControlComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -88,10 +90,10 @@ namespace Acceleratio.Nuget.Updater
             this.solutionsList.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.solutionsList.FormattingEnabled = true;
             this.solutionsList.ItemHeight = 15;
-            this.solutionsList.Location = new System.Drawing.Point(15, 203);
+            this.solutionsList.Location = new System.Drawing.Point(15, 220);
             this.solutionsList.Name = "solutionsList";
             this.solutionsList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.solutionsList.Size = new System.Drawing.Size(629, 154);
+            this.solutionsList.Size = new System.Drawing.Size(629, 124);
             this.solutionsList.TabIndex = 4;
             this.solutionsList.SelectedIndexChanged += new System.EventHandler(this.solutionsList_SelectedIndexChanged);
             // 
@@ -125,7 +127,7 @@ namespace Acceleratio.Nuget.Updater
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 187);
+            this.label4.Location = new System.Drawing.Point(12, 204);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 13);
             this.label4.TabIndex = 9;
@@ -134,7 +136,7 @@ namespace Acceleratio.Nuget.Updater
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 369);
+            this.label5.Location = new System.Drawing.Point(12, 356);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(40, 13);
             this.label5.TabIndex = 10;
@@ -143,12 +145,12 @@ namespace Acceleratio.Nuget.Updater
             // statusTextBox
             // 
             this.statusTextBox.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.statusTextBox.Location = new System.Drawing.Point(15, 385);
+            this.statusTextBox.Location = new System.Drawing.Point(15, 372);
             this.statusTextBox.Multiline = true;
             this.statusTextBox.Name = "statusTextBox";
             this.statusTextBox.ReadOnly = true;
             this.statusTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.statusTextBox.Size = new System.Drawing.Size(629, 160);
+            this.statusTextBox.Size = new System.Drawing.Size(629, 124);
             this.statusTextBox.TabIndex = 11;
             // 
             // label6
@@ -177,7 +179,7 @@ namespace Acceleratio.Nuget.Updater
             // updateButton
             // 
             this.updateButton.Enabled = false;
-            this.updateButton.Location = new System.Drawing.Point(650, 203);
+            this.updateButton.Location = new System.Drawing.Point(650, 220);
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(245, 52);
             this.updateButton.TabIndex = 18;
@@ -208,7 +210,7 @@ namespace Acceleratio.Nuget.Updater
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 137);
+            this.label7.Location = new System.Drawing.Point(12, 163);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(96, 13);
             this.label7.TabIndex = 22;
@@ -219,7 +221,7 @@ namespace Acceleratio.Nuget.Updater
             this.uploadCheckBox.AutoSize = true;
             this.uploadCheckBox.Checked = true;
             this.uploadCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.uploadCheckBox.Location = new System.Drawing.Point(114, 137);
+            this.uploadCheckBox.Location = new System.Drawing.Point(114, 163);
             this.uploadCheckBox.Name = "uploadCheckBox";
             this.uploadCheckBox.Size = new System.Drawing.Size(257, 17);
             this.uploadCheckBox.TabIndex = 23;
@@ -231,13 +233,22 @@ namespace Acceleratio.Nuget.Updater
             this.deleteOldCheckBox.AutoSize = true;
             this.deleteOldCheckBox.Checked = true;
             this.deleteOldCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.deleteOldCheckBox.Location = new System.Drawing.Point(114, 160);
+            this.deleteOldCheckBox.Location = new System.Drawing.Point(114, 186);
             this.deleteOldCheckBox.Name = "deleteOldCheckBox";
             this.deleteOldCheckBox.Size = new System.Drawing.Size(405, 17);
             this.deleteOldCheckBox.TabIndex = 24;
             this.deleteOldCheckBox.Text = "Delete older files from packages folder on source control (this could take a whil" +
     "e)";
             this.deleteOldCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // versionLabel
+            // 
+            this.versionLabel.AutoSize = true;
+            this.versionLabel.Location = new System.Drawing.Point(873, 483);
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size(22, 13);
+            this.versionLabel.TabIndex = 25;
+            this.versionLabel.Text = "1.2";
             // 
             // packagesComboBoxList
             // 
@@ -255,20 +266,34 @@ namespace Acceleratio.Nuget.Updater
             this.packagesComboBoxList.ValueSeparator = "; ";
             this.packagesComboBoxList.DropDownClosed += new System.EventHandler(this.packagesComboBoxList_DropDownClosed);
             // 
-            // versionLabel
+            // label8
             // 
-            this.versionLabel.AutoSize = true;
-            this.versionLabel.Location = new System.Drawing.Point(873, 532);
-            this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(22, 13);
-            this.versionLabel.TabIndex = 25;
-            this.versionLabel.Text = "1.2";
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 130);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(79, 13);
+            this.label8.TabIndex = 26;
+            this.label8.Text = "Source control:";
+            // 
+            // sourceControlComboBox
+            // 
+            this.sourceControlComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sourceControlComboBox.FormattingEnabled = true;
+            this.sourceControlComboBox.Items.AddRange(new object[] {
+            "Git",
+            "Team Foundation Server"});
+            this.sourceControlComboBox.Location = new System.Drawing.Point(114, 127);
+            this.sourceControlComboBox.Name = "sourceControlComboBox";
+            this.sourceControlComboBox.Size = new System.Drawing.Size(530, 21);
+            this.sourceControlComboBox.TabIndex = 27;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(905, 558);
+            this.ClientSize = new System.Drawing.Size(905, 511);
+            this.Controls.Add(this.sourceControlComboBox);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.deleteOldCheckBox);
             this.Controls.Add(this.uploadCheckBox);
@@ -324,6 +349,8 @@ namespace Acceleratio.Nuget.Updater
         private System.Windows.Forms.CheckBox uploadCheckBox;
         private System.Windows.Forms.CheckBox deleteOldCheckBox;
         private System.Windows.Forms.Label versionLabel;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox sourceControlComboBox;
     }
 }
 

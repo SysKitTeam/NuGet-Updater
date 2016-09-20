@@ -19,6 +19,7 @@ namespace Acceleratio.Nuget.Updater
     public partial class Main : Form
     {
         private readonly List<NuGetPackage> _packages;
+
         private string NuGetRepositoryUrl => repositoryTextBox.Text;
         private string LastValidRepositoryUrl;
 
@@ -51,6 +52,7 @@ namespace Acceleratio.Nuget.Updater
             _packages = new List<NuGetPackage>();
             InitializeComponent();
             versionLabel.Text = Constants.AppVersion;
+            sourceControlComboBox.SelectedIndex = 0;
             SetControlsEnabled(false);
         }
 
