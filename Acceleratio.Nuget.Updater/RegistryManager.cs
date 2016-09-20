@@ -9,33 +9,41 @@ namespace Acceleratio.Nuget.Updater
 {
     public class RegistryManager
     {
-        private const string key = "Acceleratio.Nuget.Updater\\Acceleratio\\1.1";
-        public static string GetRepositoryUrlFromRegistry()
+        private static string key = "Acceleratio.Nuget.Updater\\Acceleratio\\" + Constants.AppVersion;
+        public static async Task<string> GetRepositoryUrlFromRegistry()
         {
-            using (RegistryKey nugetUrlRegKey = Registry.CurrentUser.CreateSubKey(key))
+            string result = "";
+
+            await Task.Run(() =>
             {
-                if (nugetUrlRegKey != null)
+                using (RegistryKey nugetUrlRegKey = Registry.CurrentUser.CreateSubKey(key))
                 {
-                    string lastEnteredRepository = nugetUrlRegKey.GetValue(key, "").ToString();
-                    if (!String.IsNullOrEmpty(lastEnteredRepository))
+                    if (nugetUrlRegKey != null)
                     {
-                        return lastEnteredRepository;
+                        string lastEnteredRepository = nugetUrlRegKey.GetValue(key, "").ToString();
+                        if (!String.IsNullOrEmpty(lastEnteredRepository))
+                        {
+                            result = lastEnteredRepository;
+                        }
                     }
                 }
-            }
+            });
 
-            return "";
+            return result;
         }
 
-        public static void SetRepositoryUrlToRegistry(string url)
+        public static async Task SetRepositoryUrlToRegistry(string url)
         {
-            using (RegistryKey nugetUrlRegKey = Registry.CurrentUser.CreateSubKey(key))
+            await Task.Run(() =>
             {
-                if (nugetUrlRegKey != null)
+                using (RegistryKey nugetUrlRegKey = Registry.CurrentUser.CreateSubKey(key))
                 {
-                    nugetUrlRegKey.SetValue(key, url);
+                    if (nugetUrlRegKey != null)
+                    {
+                        nugetUrlRegKey.SetValue(key, url);
+                    }
                 }
-            }
+            });
         }
     }
 }

@@ -19,7 +19,8 @@ namespace Acceleratio.Nuget.Updater
     public partial class Main : Form
     {
         private readonly List<NuGetPackage> _packages;
-        private string NuGetRepositoryURL => repositoryTextBox.Text;
+        private string NuGetRepositoryUrl => repositoryTextBox.Text;
+        private string LastValidRepositoryUrl;
 
         private List<NuGetPackage> PackagesToInstall
         {
@@ -49,7 +50,29 @@ namespace Acceleratio.Nuget.Updater
         {
             _packages = new List<NuGetPackage>();
             InitializeComponent();
-            repositoryTextBox.Text = RegistryManager.GetRepositoryUrlFromRegistry();
+            versionLabel.Text = Constants.AppVersion;
+            SetControlsEnabled(false);
+        }
+
+        private async void Main_Shown(object sender, EventArgs e)
+        {
+            repositoryTextBox.Text = "Loading most recently used repository...";
+
+            var url = await RegistryManager.GetRepositoryUrlFromRegistry();
+
+            repositoryTextBox.Enabled = true;
+            repositoryTextBox.Text = url;
+            repositoryTextBox.BackColor = String.IsNullOrEmpty(url) ? Color.MistyRose : Color.White;
+        }
+
+        private async void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(LastValidRepositoryUrl))
+            {
+                await RegistryManager.SetRepositoryUrlToRegistry(LastValidRepositoryUrl);
+            }
+            
+            File.Delete(Constants.NuGetBinary);
         }
 
         private async void browseButton_Click(object sender, EventArgs e)
@@ -213,7 +236,7 @@ namespace Acceleratio.Nuget.Updater
                 packagesComboBoxList.BackColor = Color.White;
                 _packages.Clear();
 
-                string result = await Task.Run(() => ExecuteBinary(Constants.NuGetBinary, $"list -source \"{NuGetRepositoryURL}\" -allversions -prerelease"));
+                string result = await Task.Run(() => ExecuteBinary(Constants.NuGetBinary, $"list -source \"{NuGetRepositoryUrl}\" -allversions -prerelease"));
 
                 if (String.IsNullOrEmpty(result))
                 {
@@ -221,6 +244,8 @@ namespace Acceleratio.Nuget.Updater
                 }
                 else
                 {
+                    LastValidRepositoryUrl = NuGetRepositoryUrl;
+
                     var packageStrings = result.Split('\n').Select(x => x.Trim()).Where(x => !String.IsNullOrWhiteSpace(x)).ToList();
 
                     if (packageStrings.Any())
@@ -338,7 +363,7 @@ namespace Acceleratio.Nuget.Updater
                 foreach (string solution in solutionsList.SelectedItems)
                 {
                     FixProjectFiles(solution);
-                    await Task.Run(() => ExecuteBinary(Constants.NuGetBinary, $"update \"{solution}\" -id \"{package.PackageName}\" -version \"{package.PackageVersion}\" -source \"{NuGetRepositoryURL}\" -noninteractive -prerelease -verbose -verbosity detailed -fileconflictaction overwrite", true));
+                    await Task.Run(() => ExecuteBinary(Constants.NuGetBinary, $"update \"{solution}\" -id \"{package.PackageName}\" -version \"{package.PackageVersion}\" -source \"{NuGetRepositoryUrl}\" -noninteractive -prerelease -verbose -verbosity detailed -fileconflictaction overwrite", true));
                 }
 
                 WriteStatus("Update finished.");
@@ -447,16 +472,16 @@ namespace Acceleratio.Nuget.Updater
             SetControlsEnabled(true);
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            File.Delete(Constants.NuGetBinary);
-        }
-
-        private void SetControlsEnabled(bool enabled)
+        private void SetControlsEnabled(bool enabled, bool setRepositoryTextBoxEnabled = true)
         {
             rootPathTextBox.Enabled = enabled;
             browseButton.Enabled = enabled;
-            repositoryTextBox.Enabled = repositoryTextBox.Enabled && enabled;
+
+            if (setRepositoryTextBoxEnabled)
+            {
+                repositoryTextBox.Enabled = repositoryTextBox.Enabled && enabled;
+            }
+
             connectButton.Enabled = repositoryTextBox.Enabled && enabled;
             packagesComboBoxList.Enabled = enabled && _packages.Any();
             versionsDropDown.Enabled = enabled && versionsDropDown.SelectedItem != null && !latestCheckBox.Checked;
@@ -478,15 +503,18 @@ namespace Acceleratio.Nuget.Updater
             MessageBox.Show(text, @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private static void ShowWarning(string text)
-        {
-            MessageBox.Show(text, @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-
         private void WriteStatus(string status, bool append = false)
         {
             statusTextBox.Focus();
             statusTextBox.AppendText((append ? " " : String.IsNullOrEmpty(statusTextBox.Text) ? "" : Environment.NewLine) + (append ? "" : DateTime.Now.ToString("HH:mm:ss") + ": ") + status);
+        }
+
+        private void repositoryTextBox_TextChanged(object sender, EventArgs e)
+        {
+            Uri uriResult;
+            bool isValidUrl = Uri.TryCreate(repositoryTextBox.Text, UriKind.Absolute, out uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+            SetControlsEnabled(isValidUrl, false);
+            repositoryTextBox.BackColor = isValidUrl ? Color.White : Color.MistyRose;
         }
     }
 }
