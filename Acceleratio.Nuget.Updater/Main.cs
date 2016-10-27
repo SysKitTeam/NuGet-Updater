@@ -267,7 +267,7 @@ namespace Acceleratio.Nuget.Updater
             }
         }
 
-        private string ExecuteBinary(string binary, string arguments, bool outputToStatusWindow = false)
+        private string ExecuteBinary(string binary, string arguments, bool outputToStatusWindow = false, string workingDirectory=null)
         {
             string output = null;
 
@@ -278,7 +278,10 @@ namespace Acceleratio.Nuget.Updater
             process.StartInfo.FileName = binary;
             process.StartInfo.Arguments = arguments;
             process.StartInfo.CreateNoWindow = true;
-
+            if (!string.IsNullOrEmpty(workingDirectory))
+            {
+                process.StartInfo.WorkingDirectory = workingDirectory;
+            }
             if (outputToStatusWindow)
             {
                 process.OutputDataReceived += (sender, args) =>
@@ -365,7 +368,12 @@ namespace Acceleratio.Nuget.Updater
                 foreach (string solution in solutionsList.SelectedItems)
                 {
                     FixProjectFiles(solution);
-                    await Task.Run(() => ExecuteBinary(Constants.NuGetBinary, $"update \"{solution}\" -id \"{package.PackageName}\" -version \"{package.PackageVersion}\" -source \"{NuGetRepositoryUrl}\" -noninteractive -prerelease -verbose -verbosity detailed -fileconflictaction overwrite", true));
+                    var workingDirectory = Path.GetDirectoryName(solution);
+                    if (Directory.Exists(Path.Combine(workingDirectory, ".nuget")))
+                    {
+                        workingDirectory = Path.Combine(workingDirectory, ".nuget");
+                    }
+                    await Task.Run(() => ExecuteBinary(Constants.NuGetBinary, $"update \"{solution}\" -id \"{package.PackageName}\" -version \"{package.PackageVersion}\" -source \"{NuGetRepositoryUrl}\" -noninteractive -prerelease -verbose -verbosity detailed -fileconflictaction overwrite", true, workingDirectory));
                 }
 
                 WriteStatus("Update finished.");
